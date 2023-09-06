@@ -183,44 +183,82 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Expanded(
                               child: Container(
-                                padding: const EdgeInsets.all(16),
-                                child: Expanded(
-                                    child: ListView(
+                                  padding: const EdgeInsets.all(16),
+
+                                  /*child: ListView(
                                   // タイムラインカードの生成
                                   children: timeline.map((e) {
-                                    return Card(
-                                      child: ListTile(
-                                        title: Text(
-                                          e.keys.first,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                    return Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            e.keys.first,
+                                            style: TextStyle(
+                                              fontSize: 20,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
                                           ),
-                                        ),
-                                        subtitle: Text(
-                                          e.values.first,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                          Text(
+                                            e.values.first,
+                                            style: TextStyle(
+                                              fontSize: 15,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
                                           ),
-                                        ),
-                                        // 影をなくす
-                                        tileColor: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
+                                          Padding(
+                                              padding: EdgeInsets.all(
+                                                  timelinePadding)),
+                                        ],
                                       ),
                                     );
-                                  }).toList(),
-                                )),
-                              ),
+                                  }).toList(),*/
+                                  // wrapで実装
+                                  child: Wrap(
+                                    spacing: 8.0,
+                                    runSpacing: 4.0,
+                                    children: timeline.map((e) {
+                                      return Container(
+                                        // 3分割の比率で
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.735 *
+                                                0.245,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              e.keys.first,
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                            Text(
+                                              e.values.first,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom: timelinePadding)),
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                  )),
                             ),
                           ],
                         ),
