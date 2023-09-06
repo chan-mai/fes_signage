@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:fes_signage/models/timelineDate.dart';
@@ -93,11 +94,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     startListening(forced: true);
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    Timer.periodic(const Duration(seconds: 5), (timer) async {
       // apiからjsonを取得
       var url = Uri.parse(
           'https://script.google.com/macros/s/AKfycby6fC4Mj6Xx_NwSq1MCchYvlVI-tbPjNiAO-5ZuqaC5ZIGZTyhp-M4jlRNKHmzA1QqD/exec');
@@ -136,6 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
         // print(timeline);
       });
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
