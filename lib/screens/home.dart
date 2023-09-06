@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fes_signage/models/timelineDate.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:fes_signage/app.dart';
@@ -124,18 +125,15 @@ class _HomeScreenState extends State<HomeScreen> {
         timeline.clear();
         data['timeline'].forEach((element) {
           // datatimeから時刻を取得
-          DateTime time = DateTime.parse(element['start']);
-          String hour = time.hour.toString();
-          String minute = time.minute.toString();
-          if (time.hour < 10) {
-            hour = "0" + time.hour.toString();
+          String start = getTimeText(DateTime.parse(element['start']));
+          String end = getTimeText(DateTime.parse(element['end']));
+          String? timeText;
+          if (start != null && end != null) {
+            timeText = start + " ~ " + end;
           }
-          if (time.minute < 10) {
-            minute = "0" + time.minute.toString();
-          }
-          String TimeText = hour + ":" + minute;
+          print(timeText);
           timeline.add({
-            element['title'].toString() ?? "取得エラー": TimeText ?? "取得エラー",
+            element['title'].toString() ?? "取得エラー": timeText ?? "取得エラー",
           });
         });
         print(timeline);
@@ -188,38 +186,41 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(16),
                                 child: Expanded(
-                                  child: FixedTimeline.tileBuilder(
-                                    direction: Axis.horizontal,
-                                    builder:
-                                        TimelineTileBuilder.connectedFromStyle(
-                                      contentsAlign: ContentsAlign.alternating,
-                                      oppositeContentsBuilder:
-                                          (context, index) => Padding(
-                                        padding: EdgeInsets.only(
-                                            right: timelinePadding,
-                                            left: timelinePadding),
-                                        child:
-                                            Text(timeline[index].values.first),
-                                      ),
-                                      contentsBuilder: (context, index) => Card(
-                                        color: Theme.of(context)
+                                    child: ListView(
+                                  // タイムラインカードの生成
+                                  children: timeline.map((e) {
+                                    return Card(
+                                      child: ListTile(
+                                        title: Text(
+                                          e.keys.first,
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          e.values.first,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                        ),
+                                        // 影をなくす
+                                        tileColor: Theme.of(context)
                                             .colorScheme
-                                            .tertiaryContainer,
-                                        elevation: 0,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child:
-                                              Text(timeline[index].keys.first),
+                                            .primaryContainer,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                       ),
-                                      connectorStyleBuilder: (context, index) =>
-                                          ConnectorStyle.solidLine,
-                                      indicatorStyleBuilder: (context, index) =>
-                                          IndicatorStyle.dot,
-                                      itemCount: timeline.length,
-                                    ),
-                                  ),
-                                ),
+                                    );
+                                  }).toList(),
+                                )),
                               ),
                             ),
                           ],
