@@ -124,14 +124,14 @@ class _HomeScreenState extends State<HomeScreen> {
           String end = getTimeText(DateTime.parse(element['end']));
           String? timeText;
           if (start != null && end != null) {
-            timeText = start + " ~ " + end;
+            timeText = "$start ~ $end";
           }
           // print(timeText);
           timeline.add({
             element['title'] ?? "取得エラー": timeText ?? "取得エラー",
           });
         });
-        // print(timeline);
+        print(timeline);
       });
     });
   }
@@ -162,14 +162,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              mainTitle!,
+                              mainTitle ?? "処理中です. しばらくお待ち下さい.",
                               style: TextStyle(
                                 fontSize: 35,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             Text(
-                              subTitle!,
+                              subTitle ?? "処理中です. しばらくお待ち下さい.",
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Theme.of(context).colorScheme.primary,
