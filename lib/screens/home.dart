@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'https://script.google.com/macros/s/AKfycby6fC4Mj6Xx_NwSq1MCchYvlVI-tbPjNiAO-5ZuqaC5ZIGZTyhp-M4jlRNKHmzA1QqD/exec');
       var response = await http.get(url);
       var data = jsonDecode(response.body);
-      print(data);
+      // print(data);
 
       setState(() {
         timelinePadding = data['meta']['timeline_padding'];
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
             "body": element['body'].toString() ?? "取得エラー"
           });
         });
-        print(notification);
+        // print(notification);
         // timelineを順次読み
         timeline.clear();
         data['timeline'].forEach((element) {
@@ -131,12 +131,12 @@ class _HomeScreenState extends State<HomeScreen> {
           if (start != null && end != null) {
             timeText = start + " ~ " + end;
           }
-          print(timeText);
+          // print(timeText);
           timeline.add({
             element['title'].toString() ?? "取得エラー": timeText ?? "取得エラー",
           });
         });
-        print(timeline);
+        // print(timeline);
       });
     });
     return Scaffold(
