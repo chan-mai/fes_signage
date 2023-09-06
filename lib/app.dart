@@ -50,8 +50,8 @@ class _StatefulWidgetState extends State<AppTopWidget> {
 bool loadState = false;
 
 // meta
-String mainTitle = "";
-String subTitle = "";
+String? mainTitle;
+String? subTitle;
 
 // timeline
 List<Map<String, String>> timeline = [];

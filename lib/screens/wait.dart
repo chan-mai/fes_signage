@@ -12,9 +12,6 @@ import 'package:analog_clock/analog_clock.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 
-// timeline
-import 'package:timelines/timelines.dart';
-
 // stt
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';

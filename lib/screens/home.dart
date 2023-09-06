@@ -97,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       // apiからjsonを取得
       var url = Uri.parse(
           'https://script.google.com/macros/s/AKfycby6fC4Mj6Xx_NwSq1MCchYvlVI-tbPjNiAO-5ZuqaC5ZIGZTyhp-M4jlRNKHmzA1QqD/exec');
@@ -113,8 +113,8 @@ class _HomeScreenState extends State<HomeScreen> {
         // notificationを順次読み込み
         data['notification'].forEach((element) {
           notification.add({
-            "title": element['name'].toString() ?? "取得エラー",
-            "body": element['body'].toString() ?? "取得エラー"
+            "title": element['name'] ?? "取得エラー",
+            "body": element['body'] ?? "取得エラー"
           });
         });
         // print(notification);
@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           // print(timeText);
           timeline.add({
-            element['title'].toString() ?? "取得エラー": timeText ?? "取得エラー",
+            element['title'] ?? "取得エラー": timeText ?? "取得エラー",
           });
         });
         // print(timeline);
@@ -160,14 +160,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              mainTitle,
+                              mainTitle!,
                               style: TextStyle(
                                 fontSize: 35,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             Text(
-                              subTitle,
+                              subTitle!,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Theme.of(context).colorScheme.primary,
