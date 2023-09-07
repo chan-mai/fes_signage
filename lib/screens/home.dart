@@ -217,40 +217,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             Expanded(
                               child: Container(
                                   padding: const EdgeInsets.all(16),
-
-                                  /*child: ListView(
-                                  // タイムラインカードの生成
-                                  children: timeline.map((e) {
-                                    return Container(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            e.keys.first,
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                            ),
-                                          ),
-                                          Text(
-                                            e.values.first,
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                            ),
-                                          ),
-                                          Padding(
-                                              padding: EdgeInsets.all(
-                                                  timelinePadding)),
-                                        ],
-                                      ),
-                                    );
-                                  }).toList(),*/
                                   // wrapで実装
                                   child: Wrap(
                                     spacing: 8.0,
