@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:fes_signage/models/timelineDate.dart';
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:fes_signage/app.dart';
-import 'package:http/http.dart' as http;
+
 // extensions
 import 'package:fes_signage/extensions/snackbar.dart';
+
+// models
+import 'package:fes_signage/models/timelineDate.dart';
 
 // clock
 import 'package:analog_clock/analog_clock.dart';
@@ -18,17 +19,30 @@ import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
+// etc
+import 'package:translator/translator.dart';
+import 'package:file_selector/file_selector.dart';
+import 'package:http/http.dart' as http;
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => new _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // StT
   SpeechToText? speech;
   bool _listenLoop = false;
   String lastHeard = '';
-  String totalHeard = "";
   double confidence = 0.0;
+  // ja
+  String totalHeard = "";
+  // en
+  String totalHeardEn = "";
+  // cn
+  String totalHeardCn = "";
+
+  final translator = GoogleTranslator();
 
   final pageController = PageController();
   int initialPage = 0;
@@ -82,8 +96,27 @@ class _HomeScreenState extends State<HomeScreen> {
       lastHeard = val.alternates.last.recognizedWords;
       if (val.alternates.last.recognizedWords != "") {
         setState(() {
-          totalHeard = val.alternates.last.recognizedWords;
           confidence = val.alternates.last.confidence;
+          // jp
+          totalHeard = val.alternates.last.recognizedWords;
+          // jp -> en
+          translator
+              .translate(val.alternates.last.recognizedWords,
+                  from: 'ja', to: 'en')
+              .then((value) {
+            setState(() {
+              totalHeardEn = value.text;
+            });
+          });
+          // jp -> cn
+          translator
+              .translate(val.alternates.last.recognizedWords,
+                  from: 'ja', to: 'zh-cn')
+              .then((value) {
+            setState(() {
+              totalHeardCn = value.text;
+            });
+          });
           print('$totalHeard ($confidence)');
         });
       }
@@ -131,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
             element['title'] ?? "取得エラー": timeText ?? "取得エラー",
           });
         });
-        print(timeline);
+        // print(timeline);
       });
     });
   }
@@ -277,32 +310,84 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'リアルタイム字幕',
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'リアルタイム字幕',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                confidence == 0.0
+                                    ? Container()
+                                    : Text(
+                                        '(Confidence: ${(confidence * 100).toStringAsFixed(3)}%)',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                              ],
                             ),
+                            const Padding(padding: EdgeInsets.all(5)),
+                            // リアルタイム字幕 ja
                             Wrap(
                               spacing: 8.0,
                               runSpacing: 4.0,
                               children: [
+                                Text('日本語',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    )),
                                 Text(
                                   totalHeard,
                                   style: const TextStyle(
                                     fontSize: 20,
                                   ),
                                 ),
-                                confidence == 0.0
-                                    ? Container()
-                                    : Text(
-                                        '(信頼度: ${(confidence * 100).toStringAsFixed(3)}%)',
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
+                              ],
+                            ),
+                            // リアルタイム字幕 en
+                            Wrap(
+                              spacing: 8.0,
+                              runSpacing: 4.0,
+                              children: [
+                                Text('English',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    )),
+                                Text(
+                                  totalHeardEn,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            // リアルタイム字幕 cn
+                            Wrap(
+                              spacing: 8.0,
+                              runSpacing: 4.0,
+                              children: [
+                                Text('中文',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    )),
+                                Text(
+                                  totalHeardCn,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
                               ],
                             ),
                           ],
