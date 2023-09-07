@@ -41,6 +41,7 @@ dependencies:
   file_selector: ^1.0.0
   speech_to_text: ^6.3.0
   translator: ^0.1.7
+  google_fonts: ^4.0.4
 
 dev_dependencies:
   flutter_test:

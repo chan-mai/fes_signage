@@ -23,6 +23,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 import 'package:translator/translator.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:http/http.dart' as http;
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -196,14 +197,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               mainTitle ?? "処理中です. しばらくお待ち下さい.",
-                              style: TextStyle(
+                              style: GoogleFonts.notoSans(
                                 fontSize: 35,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             Text(
                               subTitle ?? "処理中です. しばらくお待ち下さい.",
-                              style: TextStyle(
+                              style: GoogleFonts.notoSans(
                                 fontSize: 20,
                                 color: Theme.of(context).colorScheme.primary,
                               ),
@@ -234,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Text(
                                               e.keys.first,
-                                              style: TextStyle(
+                                              style: GoogleFonts.notoSans(
                                                 fontSize: 20,
                                                 color: Theme.of(context)
                                                     .colorScheme
@@ -243,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             Text(
                                               e.values.first,
-                                              style: TextStyle(
+                                              style: GoogleFonts.notoSans(
                                                 fontSize: 15,
                                                 color: Theme.of(context)
                                                     .colorScheme
@@ -281,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text(
                                   'リアルタイム字幕',
-                                  style: TextStyle(
+                                  style: GoogleFonts.notoSans(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
                                     color:
@@ -292,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ? Container()
                                     : Text(
                                         '(Confidence: ${(confidence * 100).toStringAsFixed(3)}%)',
-                                        style: const TextStyle(
+                                        style: GoogleFonts.notoSans(
                                           fontSize: 20,
                                         ),
                                       ),
@@ -305,14 +306,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               runSpacing: 4.0,
                               children: [
                                 Text('日本語',
-                                    style: TextStyle(
+                                    style: GoogleFonts.notoSans(
                                       fontSize: 20,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     )),
                                 Text(
                                   totalHeard,
-                                  style: const TextStyle(
+                                  style: GoogleFonts.notoSans(
                                     fontSize: 20,
                                   ),
                                 ),
@@ -324,14 +325,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               runSpacing: 4.0,
                               children: [
                                 Text('English',
-                                    style: TextStyle(
+                                    style: GoogleFonts.notoSans(
                                       fontSize: 20,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     )),
                                 Text(
                                   totalHeardEn,
-                                  style: const TextStyle(
+                                  style: GoogleFonts.notoSans(
                                     fontSize: 20,
                                   ),
                                 ),
@@ -343,14 +344,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               runSpacing: 4.0,
                               children: [
                                 Text('中文',
-                                    style: TextStyle(
+                                    style: GoogleFonts.notoSans(
                                       fontSize: 20,
                                       color:
                                           Theme.of(context).colorScheme.primary,
                                     )),
                                 Text(
                                   totalHeardCn,
-                                  style: const TextStyle(
+                                  style: GoogleFonts.notoSans(
                                     fontSize: 20,
                                   ),
                                 ),
@@ -409,11 +410,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               is24HourTimeFormat: false,
                               showSecondsDigit: false,
                               digitAnimationStyle: Curves.elasticOut,
-                              hourMinuteDigitTextStyle: TextStyle(
+                              hourMinuteDigitTextStyle: GoogleFonts.notoSans(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontSize: 50,
                               ),
-                              amPmDigitTextStyle: TextStyle(
+                              amPmDigitTextStyle: GoogleFonts.notoSans(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontSize: 20,
                               ),
@@ -437,7 +438,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             Text(
                               '会場の皆様へお知らせ',
-                              style: TextStyle(
+                              style: GoogleFonts.notoSans(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).colorScheme.primary,
@@ -450,7 +451,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   return ListTile(
                                       title: Text(
                                         notification[index]['title'] ?? '取得エラー',
-                                        style: TextStyle(
+                                        style: GoogleFonts.notoSans(
                                           fontSize: 20,
                                           color: Theme.of(context)
                                               .colorScheme
@@ -459,7 +460,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       subtitle: Text(
                                         notification[index]["body"] ?? '取得エラー',
-                                        style: TextStyle(
+                                        style: GoogleFonts.notoSans(
                                           fontSize: 15,
                                           color: Theme.of(context)
                                               .colorScheme
